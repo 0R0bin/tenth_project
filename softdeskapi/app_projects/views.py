@@ -1,7 +1,10 @@
 import app_projects.serializers as pSerializers
 import app_projects.models as pModels
+
+from rest_framework.response import Response
+from rest_framework.decorators import action
 from rest_framework.viewsets import ModelViewSet
-from itertools import chain
+from rest_framework import viewsets, mixins
 
 
 class MultipleSerializerMixin:
@@ -24,7 +27,26 @@ class ProjectsViewSet(MultipleSerializerMixin, ModelViewSet):
     detail_serializer_class = pSerializers.ProjectDetailsSerializer
 
     def get_queryset(self):
-        queryset_contributors = pModels.Contributors.objects.filter(author_user_id=self.request.user)
-        final_queryset = pModels.Projects.objects.filter(id__in = queryset_contributors.values('project_id'))
-            
-        return final_queryset
+        if self.request.user.is_authenticated:
+            queryset_contributors = pModels.Contributors.objects.filter(user=self.request.user)
+            final_queryset = pModels.Projects.objects.filter(id__in = queryset_contributors.values('project_id'))
+            return final_queryset
+        else:
+            return None
+        
+        
+
+class ContributorsViewSet(MultipleSerializerMixin, mixins.RetrieveModelMixin, mixins.CreateModelMixin, mixins.ListModelMixin, mixins.DestroyModelMixin, viewsets.GenericViewSet):
+    """
+    Vue User des contributeurs
+    On renvoie les utilisateurs contributeurs du projet (table Contributors) + Ajout d'un contributeur / DEL d'un contributeur
+    """
+
+    serializer_class = pSerializers.ContributorListSerializer
+    detail_serializer_class = pSerializers.ContributorDetailsSerializer
+
+    def get_queryset(self):
+        project_id_sent = self.kwargs['project_id']
+        queryset = pModels.Contributors.objects.filter(project_id=project_id_sent)
+        
+        return queryset

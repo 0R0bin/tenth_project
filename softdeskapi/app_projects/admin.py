@@ -8,7 +8,7 @@ class ProjectsAdmin(admin.ModelAdmin):
     
 class ContributorsAdmin(admin.ModelAdmin):
 
-    list_display = ('project_id', 'author_user_id', 'permission', 'role')
+    list_display = ('project', 'user', 'permission', 'role')
 
 
 admin.site.register(Projects, ProjectsAdmin)

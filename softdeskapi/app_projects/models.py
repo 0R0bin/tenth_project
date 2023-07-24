@@ -32,9 +32,9 @@ class Contributors(models.Model):
         ("CON", "Contributor"),
     ]
 
-    project_id = models.ForeignKey(
+    project = models.ForeignKey(
         to=Projects, on_delete=models.CASCADE, null=True, blank=True) # See
-    author_user_id = models.ForeignKey(
+    user = models.ForeignKey(
         to=CustomUser, on_delete=models.CASCADE, null=True, blank=True) # See
 
     permission = models.CharField(max_length=3, choices=PERMISSIONS_CHOICES)

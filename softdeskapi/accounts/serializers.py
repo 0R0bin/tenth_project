@@ -6,7 +6,7 @@ class CustomUserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = accModels.CustomUser
-        fields = ['username', 'first_name', 'last_name', 'email', 'profile_pic']
+        fields = ['id', 'username', 'first_name', 'last_name', 'email', 'profile_pic']
         extra_kwargs = {
             'username': {'write_only': True},
             'first_name': {'write_only': True},
@@ -14,3 +14,9 @@ class CustomUserSerializer(serializers.ModelSerializer):
             'email': {'write_only': True},
             'profile_pic': {'write_only': True},
         }
+
+class LittleUserSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = accModels.CustomUser
+        fields = ['id', 'username', 'first_name', 'last_name', 'profile_pic']

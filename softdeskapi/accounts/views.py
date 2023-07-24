@@ -1,5 +1,6 @@
 import accounts.serializers as accSerializers
 from rest_framework.viewsets import ModelViewSet, ReadOnlyModelViewSet
+from rest_framework import viewsets, mixins
 
 
 class MultipleSerializerMixin:
@@ -13,7 +14,7 @@ class MultipleSerializerMixin:
     
 
 # Classe pour créer un user
-class CreateUserViewSet(MultipleSerializerMixin, ModelViewSet):
+class CreateUserViewSet(MultipleSerializerMixin, mixins.RetrieveModelMixin, mixins.CreateModelMixin, mixins.ListModelMixin, viewsets.GenericViewSet):
 
     serializer_class = accSerializers.CustomUserSerializer
 
