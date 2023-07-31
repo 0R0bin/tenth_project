@@ -30,20 +30,21 @@ class IssuesDetailsSerializer(serializers.ModelSerializer):
 class CommentsListSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = tModels.Issues
-        fields = ['id', 'description']
+        model = tModels.Comments
+        fields = ['id', 'description', 'issue']
+        extra_kwargs = {
+            'issue': {'write_only': True},
+        }
     
     # Creation
     def create(self, validated_data):
-        print(self.context['request'].query_params)
         user = self.context['request'].user
-        issue_id = self.context.get('request').query_params.get('issue_id', None)
-
+        issue = validated_data.pop('issue', None)
 
         obj_to_save = {
             'description': validated_data.pop('description', None),
             'author_user': user,
-            'issue_id': issue_id,
+            'issue': issue,
         }
 
         offer = tModels.Comments.objects.create(**obj_to_save)
@@ -55,5 +56,5 @@ class CommentsListSerializer(serializers.ModelSerializer):
 class CommentsDetailsSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = tModels.Issues
-        fields = ['id', 'title', 'author_user_id', 'created_time']
+        model = tModels.Comments
+        fields = ['id', 'description', 'created_time']

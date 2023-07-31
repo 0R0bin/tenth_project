@@ -1,7 +1,10 @@
 import tickets.models as tModels
 import tickets.serializers as tSerializers
+import app_projects.models as appPModels
 
 from rest_framework.viewsets import ModelViewSet
+from rest_framework.permissions import IsAuthenticated
+from rest_framework import exceptions
 
 
 class MultipleSerializerMixin:
@@ -21,14 +24,22 @@ class IssuesViewSet(MultipleSerializerMixin,  ModelViewSet):
     Full CRUD
     """
 
+    permission_classes = [IsAuthenticated]
+
     serializer_class = tSerializers.IssuesListSerializer
     detail_serializer_class = tSerializers.IssuesDetailsSerializer
 
     def get_queryset(self):
         project_id_sent = self.kwargs['project_id']
-        queryset = tModels.Issues.objects.filter(project_id=project_id_sent)
-        
-        return queryset
+        user_log = self.request.user
+
+        if appPModels.Contributors.objects.filter(project_id=project_id_sent).filter(user=user_log).exists():
+            queryset = tModels.Issues.objects.filter(project_id=project_id_sent)
+            return queryset
+        else:
+            res = exceptions.ValidationError({'Erreur': "Vous n'êtes affilié à ce projet"})
+            res.status_code = 401
+            raise res
 
 class CommentViewSet(MultipleSerializerMixin,  ModelViewSet):
     """
