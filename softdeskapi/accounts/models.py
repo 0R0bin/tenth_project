@@ -6,8 +6,11 @@ from accounts.path_and_rename import PathAndRename
 
 class CustomUser(AbstractUser):
 
-    profile_pic = models.ImageField(
-        null=False, blank=True, upload_to=PathAndRename('profile_pic'))
+    birthday = models.DateField()
+    can_be_contacted = models.BooleanField(default=False)
+    sharing_data = models.BooleanField(default=False)
+
+    profile_pic = models.ImageField(null=False, blank=True, upload_to=PathAndRename('profile_pic'))
 
     IMAGE_MAX_SIZE = (200, 200)
 
