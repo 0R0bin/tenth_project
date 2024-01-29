@@ -32,10 +32,8 @@ class Contributors(models.Model):
         ("CON", "Contributor"),
     ]
 
-    project = models.ForeignKey(
-        to=Projects, on_delete=models.CASCADE, null=True, blank=True) # See
-    user = models.ForeignKey(
-        to=CustomUser, on_delete=models.CASCADE, null=True, blank=True) # See
+    project = models.ForeignKey(to=Projects, on_delete=models.CASCADE, null=True, blank=True) # See
+    user = models.ForeignKey(to=CustomUser, on_delete=models.CASCADE, null=True, blank=True) # See
 
     permission = models.CharField(max_length=3, choices=PERMISSIONS_CHOICES)
     role = models.CharField(max_length=255)
