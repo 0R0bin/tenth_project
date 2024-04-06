@@ -31,11 +31,16 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+    # Server app
     'accounts',
     'app_projects',
     'tickets',
+    # DRF
     'rest_framework',
     'rest_framework_simplejwt',
+    # Swagger
+    'drf_yasg',
+    # Base
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -138,3 +143,14 @@ REST_FRAMEWORK = {
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     )
 }
+
+# Added security
+if DEBUG is False:
+    CSRF_COOKIE_SECURE = True
+    SESSION_COOKIE_SECURE = True
+    SECURE_SSL_REDIRECT = True
+    CONN_MAX_AGE = 60
+    CONN_HEALTH_CHECKS = True
+    SECURE_HSTS_SECONDS = 3600
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_HSTS_PRELOAD = True

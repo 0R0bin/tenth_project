@@ -19,8 +19,8 @@ class UserViewSet(MultipleSerializerMixin, ModelViewSet):
 
 
 # Classe pour créer un user
-class CreateUserViewSet(MultipleSerializerMixin, mixins.RetrieveModelMixin,
-                        mixins.CreateModelMixin, mixins.ListModelMixin, viewsets.GenericViewSet):
+class CreateUserViewSet(MultipleSerializerMixin, mixins.CreateModelMixin,
+                        mixins.ListModelMixin, viewsets.GenericViewSet):
 
     serializer_class = accSerializers.CustomUserSerializer
     create_serializer_class = accSerializers.CustomUserSerializer

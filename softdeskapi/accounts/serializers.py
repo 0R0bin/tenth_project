@@ -57,5 +57,5 @@ class UserFullSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = accModels.CustomUser
-        fields = ['id', 'username', 'first_name', 'last_name', 'email', 'age',
+        fields = ['id', 'username', 'first_name', 'last_name', 'email', 'birthday',
                   'can_be_contacted', 'sharing_data', 'profile_pic']
