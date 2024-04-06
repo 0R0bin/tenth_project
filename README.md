@@ -42,6 +42,8 @@ Vous êtez prêt !
 Notez d'ailleurs qu'un swagger et un redoc sont disponibles aux adresses suivante :
 ```
 http://127.0.0.1:8000/doc_swagger/
+```
+```
 http://127.0.0.1:8000/doc_redoc/
 ```
 
