@@ -5,6 +5,7 @@ import accounts.serializers as accSerializers
 from django.db import transaction
 from rest_framework import serializers
 
+
 # Classe pour créer un user
 class ProjectListSerializer(serializers.ModelSerializer):
 
@@ -15,7 +16,7 @@ class ProjectListSerializer(serializers.ModelSerializer):
             'id': {'read_only': True},
             'description': {'write_only': True},
         }
-    
+
     @transaction.atomic
     def create(self, validated_data):
 
@@ -34,6 +35,7 @@ class ProjectListSerializer(serializers.ModelSerializer):
 
         return project
 
+
 class ProjectDetailsSerializer(serializers.ModelSerializer):
 
     class Meta:
@@ -50,13 +52,13 @@ class ContributorListSerializer(serializers.ModelSerializer):
             'id': {'read_only': True},
         }
 
-
     def create(self, validated_data):
 
-        # On vérifie que l'utilisateur soit bien Auteur pour avoir le droit d'ajouter des contributeurs au projet
+        # On vérifie que l'utilisateur soit bien Auteur
         path = self.context['request'].META['PATH_INFO']
-        project_id = (path.split('/'))[2]
-        user_contributor = projectsModels.Contributors.objects.filter(project_id=project_id).get(user=self.context['request'].user)
+        project_id = (path.split('/'))[3]
+        user_contributors = projectsModels.Contributors.objects.filter(project_id=project_id)
+        user_contributor = user_contributors.get(user=self.context['request'].user)
 
         # Si le user log est bien l'auteur
         if user_contributor.permission == 'AUT':
@@ -74,7 +76,6 @@ class ContributorListSerializer(serializers.ModelSerializer):
         # Sinon
         else:
             raise serializers.ValidationError({"Erreur": "Vous n'êtes pas auteur de ce projet"})
-            
 
 
 class ContributorDetailsSerializer(serializers.ModelSerializer):

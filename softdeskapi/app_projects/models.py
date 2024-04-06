@@ -1,6 +1,7 @@
 from django.db import models
 from accounts.models import CustomUser
 
+
 class Projects(models.Model):
 
     TYPE_CHOICES = [
@@ -9,7 +10,7 @@ class Projects(models.Model):
         ("IOS", "IOS"),
         ("AD", "Android"),
     ]
-    
+
     title = models.CharField(max_length=255)
     description = models.CharField(max_length=255)
     type = models.CharField(max_length=3, choices=TYPE_CHOICES)
@@ -32,9 +33,8 @@ class Contributors(models.Model):
         ("CON", "Contributor"),
     ]
 
-    project = models.ForeignKey(to=Projects, on_delete=models.CASCADE, null=True, blank=True) # See
-    user = models.ForeignKey(to=CustomUser, on_delete=models.CASCADE, null=True, blank=True) # See
-
+    project = models.ForeignKey(to=Projects, on_delete=models.CASCADE, null=True, blank=True)
+    user = models.ForeignKey(to=CustomUser, on_delete=models.CASCADE, null=True, blank=True)
     permission = models.CharField(max_length=3, choices=PERMISSIONS_CHOICES)
     role = models.CharField(max_length=255)
 
@@ -43,7 +43,3 @@ class Contributors(models.Model):
         db_table_comment = "Table contenant les différents participants"
         verbose_name = "Contributor"
         verbose_name_plural = "Contributors"
-
-
-
-        

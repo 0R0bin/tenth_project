@@ -24,7 +24,7 @@ class CustomUser(AbstractUser):
             myUser = CustomUser.objects.get(id=self.pk)
             if myUser.profile_pic != self.profile_pic:
                 myUser.profile_pic.delete(save=False)
-        except:
+        except Exception:
             pass
 
         super().save(*args, **kwargs)

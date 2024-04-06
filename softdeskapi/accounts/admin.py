@@ -13,7 +13,7 @@ class CustomUserAdmin(UserAdmin):
             'fields': ('username', 'password')
         }),
         ('Personal info', {
-            'fields': ('first_name', 'last_name', 'email', 'profile_pic')
+            'fields': ('first_name', 'last_name', 'email', 'birthday', 'profile_pic')
         }),
         ('Permissions', {
             'fields': (
@@ -43,7 +43,6 @@ class CustomUserAdmin(UserAdmin):
             'fields': ('last_login', 'date_joined')
         })
     )
-
 
 
 admin.site.register(CustomUser, CustomUserAdmin)
