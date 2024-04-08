@@ -14,7 +14,7 @@ class UserViewSet(MultipleSerializerMixin, ModelViewSet):
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        queryset = accModels.CustomUser.objects.filter(user=self.request.user)
+        queryset = accModels.CustomUser.objects.filter(pk=self.request.user.pk)
         return queryset
 
 
